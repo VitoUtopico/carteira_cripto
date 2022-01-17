@@ -1,4 +1,5 @@
 dynaconf
+dynaconf[yaml]
 Flask-Admin
 Flask-Bootstrap
 Flask-RESTful

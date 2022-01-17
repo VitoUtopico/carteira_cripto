@@ -1,0 +1,8 @@
+default:
+  DEBUG : false
+  FLASK_ADMIN_NAME : 'Carteira Cripto'
+  FLASK_ADMIN_TEMPLATE_MODE : 'bootstrap3'
+  FLASK_ADMIN_SWATCH : 'cerulean'
+  TITLE : 'Carteira Cripto'
+  EXTENSIONS:
+    - carteira_cripto.blueprints.webui:init_app
