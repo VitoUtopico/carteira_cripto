@@ -5,5 +5,8 @@ default:
   FLASK_ADMIN_SWATCH : 'cerulean'
   TITLE : 'Carteira Cripto'
   COINGECKO_API : 'https://api.coingecko.com/api/v3/'
+  SQLALCHEMY_DATABASE_URI : 'sqlite:///development.db'
   EXTENSIONS:
     - carteira_cripto.blueprints.webui:init_app
+    - carteira_cripto.blueprints.restapi:init_app
+    - carteira_cripto.ext.doc:init_app
