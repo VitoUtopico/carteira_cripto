@@ -10,3 +10,4 @@ Flask
 SQLAlchemy-serializer
 flask-migrate
 requests
+flask_pydantic_spec
