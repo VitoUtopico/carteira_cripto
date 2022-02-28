@@ -10,3 +10,6 @@ default:
     - carteira_cripto.blueprints.webui:init_app
     - carteira_cripto.blueprints.restapi:init_app
     - carteira_cripto.ext.doc:init_app
+    - carteira_cripto.ext.database:init_app
+    - carteira_cripto.ext.commands:init_app
+  SQLALCHEMY_TRACK_MODIFICATIONS : False
