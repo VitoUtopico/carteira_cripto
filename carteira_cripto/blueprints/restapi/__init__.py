@@ -9,7 +9,11 @@ from .resources import WalletCalc,\
                         InsertCryptocurrency,\
                         InsertWallet,\
                         InsertUser,\
-                        InsertCryptocurrencyWallet
+                        InsertCryptocurrencyWallet,\
+                        UpdateCryptocurrency,\
+                        UpdateWallet,\
+                        UpdateUser,\
+                        UpdateCryptocurrencyWallet
 
 bp = Blueprint('restapi',\
                 __name__,
@@ -17,10 +21,16 @@ bp = Blueprint('restapi',\
 api = Api(bp)
 api.add_resource(WalletCalc, '/calcs/')
 api.add_resource(ListCryptocurrency, '/cryptos/')
+
 api.add_resource(InsertCryptocurrency, '/insertcrypto/')
 api.add_resource(InsertWallet, '/insertwallet/')
 api.add_resource(InsertUser, '/insertuser/')
 api.add_resource(InsertCryptocurrencyWallet, '/insertcryptowallet/')
+
+api.add_resource(UpdateCryptocurrency, '/updatecrypto/<id_criptocurrency>')
+api.add_resource(UpdateWallet, '/updatewallet/<id_user>/<id_wallet>')
+api.add_resource(UpdateUser, '/updateuser/<id_user>')
+api.add_resource(UpdateCryptocurrencyWallet, '/updatecryptowallet/<id_cryptocurrency_wallet>/<id_wallet>/<id_cryptocurrency>')
 
 
 def init_app(app):

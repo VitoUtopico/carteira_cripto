@@ -14,10 +14,12 @@ class ListCryptocurrency(Resource):
         # cryptos = Wallet.query.all() or abort(204)
         # cryptos = User.query.all() or abort(204)
         cryptos = CryptocurrencyWallet.query.all() or abort(204)
-        print(cryptos)
         return jsonify(
             {'Cryptocurrency': [crypto.to_dict() for crypto in cryptos]}
         )
+
+
+## Inserts
 
 class InsertCryptocurrency(Resource):
     def post(self):
@@ -65,4 +67,56 @@ class InsertCryptocurrencyWallet(Resource):
                 ]
         db.session.bulk_save_objects(data)
         db.session.commit()
+
+
+## Updates
         
+class UpdateCryptocurrency(Resource):
+    def put(self, id_criptocurrency):
+        new_nm_cryptocurrency = request.form['new_nm_cryptocurrency']
+        new_cd_cryptocurrency = request.form['new_cd_cryptocurrency']
+
+        Cryptocurrency.query.filter_by(id_cryptocurrency=id_criptocurrency)\
+                            .update(dict(
+                                nm_cryptocurrency = new_nm_cryptocurrency ,
+                                cd_cryptocurrency = new_cd_cryptocurrency
+                            ))
+        db.session.commit()
+
+class UpdateWallet(Resource):
+    def put(self, id_user, id_wallet):
+        new_nm_wallet = request.form['new_nm_wallet']
+
+        Wallet.query.filter_by(id_user=id_user, id_wallet=id_wallet)\
+                        .update(dict(
+                            nm_wallet = new_nm_wallet
+                        ))
+        db.session.commit()
+
+class UpdateUser(Resource):
+    def put(self, id_user):
+        new_nm_username = request.form['new_nm_username']
+        new_cd_password = request.form['new_cd_password']
+
+        User.query.filter_by(id_user=id_user)\
+                        .update(dict(
+                            nm_username = new_nm_username,
+                            cd_password = new_cd_password
+                        ))
+        db.session.commit()
+
+class UpdateCryptocurrencyWallet(Resource):
+    def put(self, id_cryptocurrency_wallet, id_wallet, id_cryptocurrency):
+        new_nr_current_amount = request.form['new_nr_current_amount']
+        new_nr_rating = request.form['new_nr_rating']
+
+        CryptocurrencyWallet.query.filter_by(
+                                        id_cryptocurrency_wallet=id_cryptocurrency_wallet,
+                                        id_wallet=id_wallet,
+                                        id_cryptocurrency=id_cryptocurrency
+                                    )\
+                                    .update(dict(
+                                        nr_current_amount = new_nr_current_amount,
+                                        nr_rating = new_nr_rating
+                                    ))
+        db.session.commit()
