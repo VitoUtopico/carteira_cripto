@@ -8,7 +8,8 @@ class WalletCalc(Resource):
         name = request.form['name']
         return(name)
 
-class ListCryptocurrency(Resource):
+## Selects
+class SelectCryptocurrency(Resource):
     def get(self):
         # cryptos = Cryptocurrency.query.all() or abort(204)
         # cryptos = Wallet.query.all() or abort(204)
@@ -18,6 +19,20 @@ class ListCryptocurrency(Resource):
             {'Cryptocurrency': [crypto.to_dict() for crypto in cryptos]}
         )
 
+class SelectWallet(Resource):
+    def get(self):
+        ...
+
+class SelectUser(Resource):
+    def get(self):
+        ...
+
+class SelectAllCryptocurrencyWallet(Resource):
+    def get(self, id_wallet):
+        cryptos_wallet = CryptocurrencyWallet.query.filter_by(id_wallet=id_wallet).all()
+        return jsonify(
+            {'Wallet Values': [crypto_wallet.to_dict() for crypto_wallet in cryptos_wallet]}
+        )
 
 ## Inserts
 

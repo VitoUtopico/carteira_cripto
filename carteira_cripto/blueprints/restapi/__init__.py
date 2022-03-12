@@ -5,7 +5,8 @@ from flask import Blueprint
 from flask_restful import Api
 
 from .resources import WalletCalc,\
-                        ListCryptocurrency,\
+                        SelectCryptocurrency,\
+                        SelectAllCryptocurrencyWallet,\
                         InsertCryptocurrency,\
                         InsertWallet,\
                         InsertUser,\
@@ -20,7 +21,8 @@ bp = Blueprint('restapi',\
                 url_prefix='/api/v1')
 api = Api(bp)
 api.add_resource(WalletCalc, '/calcs/')
-api.add_resource(ListCryptocurrency, '/cryptos/')
+api.add_resource(SelectCryptocurrency, '/cryptos/')
+api.add_resource(SelectAllCryptocurrencyWallet, '/cryptos_wallet/<id_wallet>/')
 
 api.add_resource(InsertCryptocurrency, '/insertcrypto/')
 api.add_resource(InsertWallet, '/insertwallet/')
