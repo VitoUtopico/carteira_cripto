@@ -1,23 +1,41 @@
 from flask import abort, jsonify, request
 from flask_restful import Resource
 from carteira_cripto.ext.database.models import *
+from carteira_cripto.data_process.contribution_calc import contribution_calc
 
-
+## Cálculo do balanceamento que deve ser feito incluindo o valor de aporte
 class WalletCalc(Resource):
     def post(self):
-        name = request.form['name']
-        return(name)
+        contribution = request.form['contribution']
+        id_wallet = request.form['id_wallet']
+        cryptocurrencies = SelectAllCryptocurrency.get(self).json
+        cryptos_wallet = SelectCryptocurrencyWalletById.get(self, id_wallet).json
+        tebela = contribution_calc(int(contribution),\
+                                   cryptocurrencies,
+                                   cryptos_wallet)
+        # return cryptocurrency_wallet
 
 ## Selects
-class SelectCryptocurrency(Resource):
+class SelectAllCryptocurrency(Resource):
     def get(self):
+        cryptos = Cryptocurrency.query.all() or abort(204)
+        return jsonify(
+            {'Cryptocurrencies': [crypto.to_dict() for crypto in cryptos]}
+        )
+
         # cryptos = Cryptocurrency.query.all() or abort(204)
         # cryptos = Wallet.query.all() or abort(204)
         # cryptos = User.query.all() or abort(204)
-        cryptos = CryptocurrencyWallet.query.all() or abort(204)
+
+class SelectCryptocurrencyById(Resource):
+    def get(self, id_cryptocurrency):
+        cryptos = Cryptocurrency.query\
+                                .filter_by(id_cryptocurrency=id_cryptocurrency)\
+                                .all() or abort(204)
         return jsonify(
             {'Cryptocurrency': [crypto.to_dict() for crypto in cryptos]}
         )
+
 
 class SelectWallet(Resource):
     def get(self):
@@ -27,11 +45,15 @@ class SelectUser(Resource):
     def get(self):
         ...
 
-class SelectAllCryptocurrencyWallet(Resource):
+
+class SelectCryptocurrencyWalletById(Resource):
     def get(self, id_wallet):
-        cryptos_wallet = CryptocurrencyWallet.query.filter_by(id_wallet=id_wallet).all()
+        cryptos_wallet = CryptocurrencyWallet.query\
+                        .filter_by(id_wallet=id_wallet)\
+                        .all() or abort(204)
+        print(cryptos_wallet)
         return jsonify(
-            {'Wallet Values': [crypto_wallet.to_dict() for crypto_wallet in cryptos_wallet]}
+            {'Cryptos Wallet': [cryptos_wallet.to_dict() for cryptos_wallet in cryptos_wallet]}
         )
 
 ## Inserts
